@@ -7,6 +7,14 @@ function App() {
   const [project_lifetime, setLifetime] = useState(0);
   const [remaining_time, updateRemainingTime] = useState(0);
   const [renderInitialForm, updateRenderInitialForm] = useState(true);
+  const [tasks, updateTasks] = useState([]);
+
+  const addTask = task => {
+    updateTasks([
+      ...tasks,
+      task
+    ]);
+  }
 
   return (
     <Fragment>
@@ -27,7 +35,9 @@ function App() {
             (
               <div className="row">
                 <div className="one-half column">
-                  <TaskForm/>
+                  <TaskForm
+                    addTask = { addTask }
+                  />
                 </div>
                 <div className="one-half column">
                 </div>

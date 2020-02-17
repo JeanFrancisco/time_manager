@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import ShortID from 'shortid';
 import Error from './Error';
 
-const TaskForm = () => {
+const TaskForm = ({ addTask }) => {
     const [task_desc, setTaskDescription] = useState('');
     const [task_time, setTaskTime] = useState(0);
     const [error, setError] = useState('');
@@ -15,7 +16,14 @@ const TaskForm = () => {
             return;
         }
 
-        setError('')
+        setError('');
+        let task = {
+            id: ShortID.generate(),
+            task_desc,
+            task_time,
+        }
+
+        addTask(task);
     }
 
     const handleTaskTime = e => {
