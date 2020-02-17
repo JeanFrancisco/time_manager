@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import Error from './Error';
 
 const StartForm = () => {
     // set the local state
@@ -24,7 +25,9 @@ const StartForm = () => {
         <Fragment>
             <h2>Let's Go to Start a New Project</h2>
             
-            { (error !== '') ? <div className="alert alert-danger error"> { error } </div> : null }
+            {
+                ( error !== '' ) ? <Error error = { error }/> : null
+            }
 
             <form
                 onSubmit = { settingTime }
