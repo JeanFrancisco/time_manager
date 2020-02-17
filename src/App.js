@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
-import StartForm from './components/StartForm'
+import StartForm from './components/StartForm';
+import TaskForm from './components/TaskForm';
 
 function App() {
   // set global application state
@@ -15,6 +16,15 @@ function App() {
             updateLifetime = { setLifetime }
             setRemainingTime = { updateRemainingTime }
           />
+
+          <div className="row">
+            <div className="one-half column">
+              <TaskForm/>
+            </div>
+            <div className="one-half column">
+2
+            </div>
+          </div>
         </div>
       </div>
     </Fragment>
