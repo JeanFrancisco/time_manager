@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import Error from './Error';
 
-const StartForm = () => {
+const StartForm = ({ setLifetime, updateRemainingTime }) => {
     // set the local state
     const [time, updateTime] = useState(0);
     const [error, setError] = useState('')
@@ -13,12 +13,17 @@ const StartForm = () => {
     const settingTime = e => {
         e.preventDefault();
 
+        // validation rules...
         if(time <= 0 || isNaN(time) ) {
             setError('Your project lifetime has not a valid numeric value');
             return;
         }
 
+        // erase error. 'cause already pass the validation rules.
         setError('');
+
+        setLifetime(time);
+        updateRemainingTime(time);
     }
 
     return (
