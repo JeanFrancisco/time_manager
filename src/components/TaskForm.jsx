@@ -1,8 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Error from './Error';
 
 const TaskForm = () => {
+    const [task_desc, setTaskDescription] = useState('');
+    const [task_time, setTaskTime] = useState(0);
+    const [error, setError] = useState('');
+
+    const handleFormTask = e => {
+        e.preventDefault();
+
+        // Validation..
+        if(isNaN(task_time) || task_time <= 0 || task_desc.trim() === '') {
+            setError('Please verify that you was enter valid data');
+            return;
+        }
+
+        setError('')
+    }
+
+    const handleTaskTime = e => {
+        if( isNaN( parseInt(e.target.value) ) ) {
+            setError('Please enter a numeric value for the estimated time');
+            return;
+        }
+
+        setError('');
+        setTaskTime( parseInt(e.target.value) );
+    }
+
     return (
-        <form>
+        <form onSubmit = { handleFormTask } >
+            { error === '' ? null : ( <Error error = { error }/> ) }
+
             <h2>Add a New Project Task</h2>
 
             <div className="field">
@@ -13,6 +42,8 @@ const TaskForm = () => {
                     type="text"
                     name=""
                     id=""
+                    value = { task_desc }
+                    onChange = { e => setTaskDescription(e.target.value) }
                 />
             </div>
 
@@ -21,6 +52,8 @@ const TaskForm = () => {
 
                 <input className="u-full-width"
                     type="number"
+                    value = { task_time }
+                    onChange = { handleTaskTime }
                 />
             </div>
 
