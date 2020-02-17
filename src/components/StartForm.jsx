@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import Error from './Error';
 
-const StartForm = ({ setLifetime, updateRemainingTime }) => {
+const StartForm = ({ setLifetime, updateRemainingTime, updateRenderInitialForm }) => {
     // set the local state
     const [time, updateTime] = useState(0);
     const [error, setError] = useState('')
@@ -24,6 +24,7 @@ const StartForm = ({ setLifetime, updateRemainingTime }) => {
 
         setLifetime(time);
         updateRemainingTime(time);
+        updateRenderInitialForm(false);
     }
 
     return (
