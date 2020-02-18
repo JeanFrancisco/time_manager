@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import StartForm from './components/StartForm';
 import TaskForm from './components/TaskForm';
+import TasksList from './components/TasksList';
 
 function App() {
   // set global application state
@@ -40,6 +41,9 @@ function App() {
                   />
                 </div>
                 <div className="one-half column">
+                  <TasksList
+                    tasks = { tasks }
+                  />
                 </div>
               </div>
             )
