@@ -24,6 +24,9 @@ const TaskForm = ({ addTask }) => {
         }
 
         addTask(task);
+
+        setTaskDescription('');
+        setTaskTime(0);
     }
 
     const handleTaskTime = e => {
