@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import StartForm from './components/StartForm';
 import TaskForm from './components/TaskForm';
 import TasksList from './components/TasksList';
+import TimeLeft from './components/TimeLeft';
 
 function App() {
   // set global application state
@@ -43,6 +44,11 @@ function App() {
                 <div className="one-half column">
                   <TasksList
                     tasks = { tasks }
+                  />
+
+                  <TimeLeft
+                    project_lifetime = { project_lifetime }
+                    remaining_time = { remaining_time }
                   />
                 </div>
               </div>
