@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import StartForm from './components/StartForm';
 import TaskForm from './components/TaskForm';
 import TasksList from './components/TasksList';
@@ -10,6 +10,14 @@ function App() {
   const [remaining_time, updateRemainingTime] = useState(0);
   const [renderInitialForm, updateRenderInitialForm] = useState(true);
   const [tasks, updateTasks] = useState([]);
+
+  // Listen for new tasks to update the remaining_time value
+  useEffect(() => {
+
+    const time_left = project_lifetime - tasks.reduce( (sum, task) => (task.task_time + sum), 0 );
+    updateRemainingTime(time_left);
+
+  }, [tasks]);
 
   const addTask = task => {
     updateTasks([
