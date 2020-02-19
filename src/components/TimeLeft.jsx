@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { calculateRemainingClass } from '../helpers';
 
 const TimeLeft = ({ project_lifetime, remaining_time }) => {
     return (
@@ -7,7 +8,7 @@ const TimeLeft = ({ project_lifetime, remaining_time }) => {
                 Project Lifetime: { project_lifetime }
             </div>
 
-            <div className="alert">
+            <div className ={ "alert " + calculateRemainingClass(project_lifetime, remaining_time) }>
                 Project Remaining Time: { remaining_time }
             </div>
         </Fragment>
