@@ -5,7 +5,7 @@ const TasksList = ({ tasks }) => (
         <h2>Your Tasks</h2>
         {
             tasks.map( task => (
-                <li className="task-item">
+                <li key={ task.id } className="task-item">
                     <p>
                         { task.task_desc }
                         <span className="task">{ task.task_time }</span>

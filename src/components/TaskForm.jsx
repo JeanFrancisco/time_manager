@@ -4,14 +4,14 @@ import Error from './Error';
 
 const TaskForm = ({ addTask }) => {
     const [task_desc, setTaskDescription] = useState('');
-    const [task_time, setTaskTime] = useState(0);
+    const [task_time, setTaskTime] = useState('');
     const [error, setError] = useState('');
 
     const handleFormTask = e => {
         e.preventDefault();
 
         // Validation..
-        if(isNaN(task_time) || task_time <= 0 || task_desc.trim() === '') {
+        if( !/(\s*\d+[\.\d+]?[d|h|m]\s*)+/.test(task_time) || task_desc.trim() === '') {
             setError('Please verify that you was enter valid data');
             return;
         }
@@ -26,17 +26,17 @@ const TaskForm = ({ addTask }) => {
         addTask(task);
 
         setTaskDescription('');
-        setTaskTime(0);
+        setTaskTime('');
     }
 
     const handleTaskTime = e => {
-        if( isNaN( parseInt(e.target.value) ) ) {
-            setError('Please enter a numeric value for the estimated time');
+        if( ! /\d+[\.\d+]?(d|h|m)?/.test(e.target.value) ) {
+            setError('Please enter a valid value for the estimated time');
             return;
         }
 
         setError('');
-        setTaskTime( parseInt(e.target.value) );
+        setTaskTime( e.target.value );
     }
 
     return (
@@ -60,9 +60,13 @@ const TaskForm = ({ addTask }) => {
 
             <div className="field">
                 <label htmlFor="">Estimated Time</label>
+                <p><span>*</span>This input accepts the same time units:</p>
+                <p>d=days, h=hours, m=minutes</p>
 
                 <input className="u-full-width"
-                    type="number"
+                    type="text"
+                    placeholder="Enter how long take it will take to complete the task. Example 2d 3h"
+                    pattern="(\s*\d+[\.\d+]?[d|h|m]\s*)+"
                     value = { task_time }
                     onChange = { handleTaskTime }
                 />
