@@ -13,11 +13,9 @@ function App() {
   const [tasks, updateTasks] = useState([]);
 
   // Listen for new tasks to update the remaining_time value
-  useEffect(() => {
+  useEffect( () => {
 
-    const project_time_minutes = convertTimeNotation(project_lifetime, 'minutes');
-    const total_tasks_minutes = tasks.reduce( (sum, task) => ( convertTimeNotation(task.task_time, 'minutes') + sum ), 0 );
-    const time_left_minutes = project_time_minutes - total_tasks_minutes;
+    const time_left_minutes = calculateTimeLeft('minutes');
     if(time_left_minutes >= 0) {
       const time_left = transformToTimeNotation(time_left_minutes, 'minutes');
       updateRemainingTime(time_left);  
@@ -30,6 +28,13 @@ function App() {
       ...tasks,
       task
     ]);
+  }
+
+  const calculateTimeLeft = (unit_of_time) => {
+    const project_time_minutes = convertTimeNotation(project_lifetime, unit_of_time);
+    const total_tasks_minutes = tasks.reduce( (sum, task) => ( convertTimeNotation(task.task_time, unit_of_time) + sum ), 0 );
+    const time_left_minutes = project_time_minutes - total_tasks_minutes;
+    return time_left_minutes;
   }
 
   return (
@@ -53,6 +58,7 @@ function App() {
                 <div className="one-half column">
                   <TaskForm
                     addTask = { addTask }
+                    calculateTimeLeft = { calculateTimeLeft }
                   />
                 </div>
                 <div className="one-half column">

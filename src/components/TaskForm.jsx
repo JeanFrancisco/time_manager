@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import ShortID from 'shortid';
 import Error from './Error';
+import { convertTimeNotation } from '../helpers';
 
-const TaskForm = ({ addTask }) => {
+const TaskForm = ({ addTask, calculateTimeLeft }) => {
     const [task_desc, setTaskDescription] = useState('');
     const [task_time, setTaskTime] = useState('');
     const [error, setError] = useState('');
@@ -30,13 +31,25 @@ const TaskForm = ({ addTask }) => {
     }
 
     const handleTaskTime = e => {
+        let has_error = false;
         if( ! /\d+[\.\d+]?(d|h|m)?/.test(e.target.value) ) {
+            has_error = true;
             setError('Please enter a valid value for the estimated time');
-            return;
         }
 
-        setError('');
-        setTaskTime( e.target.value );
+        if(! has_error) { // To avoid evaluate the below expressions if an error already exists.
+            const current_time_left = calculateTimeLeft('minutes');
+            const new_task_time = convertTimeNotation(e.target.value, 'minutes');
+            if( current_time_left < new_task_time ) {
+                has_error = true;
+                setError('Your task could not be added. Because it exceeds the remaining time of the project.');
+            }
+        }
+
+        if(! has_error) {
+            setError('');
+            setTaskTime( e.target.value );
+        }
     }
 
     return (
